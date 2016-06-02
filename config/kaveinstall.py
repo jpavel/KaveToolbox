@@ -195,7 +195,13 @@ def df(filename, options=[]):
         output = _df.communicate()[0]
     except:
         raise OSError("Problem retrieving diskspace for " + filename)
-    return output.split("\n")[1].split()
+    by_lines=output.split("\n")
+    out=by_lines[1].split()
+    # fix for case output has several lines
+    for line in range(2,len(by_lines)):
+	out.extend(by_lines[line].split())
+    return out
+
 
 
 def installfrom():
